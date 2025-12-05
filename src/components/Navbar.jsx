@@ -1,30 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {assets} from '../assets/assets'
 import {Link, NavLink} from 'react-router-dom'
 
 const Navbar = () => {
+
+    const [visible, setVisible] = useState(false)
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
         <img src={assets.logo} alt="logo"  className='w-36'/>
 
         <ul className='hidden sm:flex gap-5 text-sm text-gray-500'>
             <NavLink to="/" className='flex flex-col items-center gap-1'>
-            <p>Home</p>
+            <p>HOME</p>
             <hr className='w-2/4 border-none h-[2px] bg-black hidden'/>
             </NavLink>
 
             <NavLink to="/collections" className='flex flex-col items-center gap-1'>
-            <p>Collections</p>
+            <p>COLLECTION</p>
             <hr className='w-2/4 border-none h-[2px] bg-black hidden'/>
             </NavLink>
 
             <NavLink to="/about" className='flex flex-col items-center gap-1'>
-            <p>About</p>
+            <p>ABOUT</p>
             <hr className='w-2/4 border-none h-[2px] bg-black hidden'/>
             </NavLink>
 
             <NavLink to="/contact" className='flex flex-col items-center gap-1'>
-            <p>Contact</p>
+            <p>CONTACT</p>
             <hr className='w-2/4 border-none h-[2px] bg-black hidden'/>
             </NavLink>
         </ul>
@@ -49,8 +51,23 @@ const Navbar = () => {
                     <img src={assets.cart_icon} alt="cart" className='w-5 min-w-5 cursor-pointer'/>
                     <div className='absolute bottom-[-5px] right-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>0</div>
                 </Link>
+                <img onClick={() => setVisible(true)} src={assets.menu_icon} alt="menu" className='w-5 cursor-pointer sm:hidden'/>
         </div>
-    </div>
+
+        {/* side bar menu visible for small screens */}
+        <div className={`absolute right-0 top-0 bottom-0 overflow-hidden bg-white transition-all duration-300 ease-in-out transform translate-x-0 ${visible ? 'w-full' : 'w-0'}`}>
+            <div className='flex flex-col text-gray-600 cursor-pointer'>
+                <div onClick={() => setVisible(false)} className='flex items-center gap-4 p-3'>
+                    <img className='h-4 rotate-180' src={assets.dropdown_icon} alt="dropdown" />
+                    <p>Back</p>
+                </div>
+                <NavLink onClick={() => setVisible(false)} to="/" className='py-2 pl-6 border-b'>HOME</NavLink>
+                <NavLink onClick={() => setVisible(false)} to="/collections" className='py-2 pl-6 border-b'>COLLECTION</NavLink>
+                <NavLink onClick={() => setVisible(false)} to="/about" className='py-2 pl-6 border-b'>ABOUT</NavLink>
+                <NavLink onClick={() => setVisible(false)} to="/contact" className='py-2 pl-6 border-b'>CONTACT</NavLink>
+            </div>
+        </div>
+    </div>  
   )
 }
 
